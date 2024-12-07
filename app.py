@@ -4,9 +4,14 @@ import os
 import sqlite3
 import streamlit as st
 import google.generativeai as genai
+from sql import DatabaseSetup
+
+db = DatabaseSetup("student.db")
+db.setup_database()
 
 # Configure GenAI API key
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+google_api_key = st.secrets["GOOGLE_API_KEY"]
+genai.configure(api_key=google_api_key)
 
 # Function to load Gemini Pro model and provide sql query as response
 def get_gemini_response(question, prompt):

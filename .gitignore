@@ -25,6 +25,7 @@ ENV/
 
 # Environment Variables
 .env
+.streamlit/
 
 # IDE specific files
 .idea/
