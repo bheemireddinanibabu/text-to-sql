@@ -9,9 +9,19 @@ from sql import DatabaseSetup
 db = DatabaseSetup("student.db")
 db.setup_database()
 
-# Configure GenAI API key
-google_api_key = st.secrets["GOOGLE_API_KEY"]
-genai.configure(api_key=google_api_key)
+def get_user_api_key():
+    """Get API key from user input"""
+    api_key = st.text_input(
+        "Enter your Google API Key",
+        type="password",  # This masks the input
+        help="Get your API key from Google Cloud Console"
+    )
+    
+    # Save to session state
+    if api_key:
+        st.session_state['api_key'] = api_key
+        
+    return api_key
 
 # Function to load Gemini Pro model and provide sql query as response
 def get_gemini_response(question, prompt):
@@ -89,6 +99,13 @@ prompt = ["""
 # Streamlit app
 st.set_page_config(page_title="SQL Query Generator")
 st.header("SQL Query Generator")
+
+# Get API key from session state or user input
+api_key = st.session_state.get('api_key') or get_user_api_key()
+
+# Configure GenAI API key
+genai.configure(api_key=api_key)
+
 question = st.text_input("Input: ", key="input")
 submit = st.button("Ask the question")
 
