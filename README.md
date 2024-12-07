@@ -39,9 +39,8 @@ source venv/bin/activate
 # Installed required packages
 pip install -r requirements.txt
  
-# Setup env variables
-Create .env and add your GOOGLE_API_KEY
-Link to create a google api key: https://makersuite.google.com/app/apikey
+# Setup google api key
+# Link to create a google api key: https://makersuite.google.com/app/apikey
 
 ## run application
 streamlit run app.py
